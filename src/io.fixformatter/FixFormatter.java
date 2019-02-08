@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * FixFormatter
@@ -79,12 +81,11 @@ public class FixFormatter {
                 // While loop.
                 while ((line = br.readLine()) != null) {
                     // Parsing to remove the empty spacing to make putting it into an array easier.
+                    line = remove_duplicate(line);
+                    line = reFormatStates(line);
+                    System.out.println(line);
                     String s = line.replaceAll(" ", ";");
-                    s = s.replace(";;;;;;;;;;;;;;;;;;;;;;;;;", ";");
-                    s = s.replace(";;;;;;;;;;;;;;;;;;;;;;;", ";");
-                    s = s.replace(";;;;;;;;;;;;;;;;;;;", ";");
-                    s = s.replace(";;;;;;;", ";");
-                    s = s.substring(0, s.length() - 1);
+
                     // Turning S into an array to make accessing the data easier.
                     String[] formattedSplit = s.split(";");
 
@@ -170,6 +171,75 @@ public class FixFormatter {
         String formatted;
         formatted = s.substring(s.length() - subString);
         return formatted;
+    }
+
+    /**
+     * reFormatStates - Replaces states (with spaces in the names) with versions without it.
+     * @param s Current line of the reader.
+     * @return String without states that would break the split.
+     */
+    public String reFormatStates(String s){
+        // I know this is not ideal, but was the easiest way to fix this split issue.
+        String formatted = s;
+        formatted = formatted.replace("DIST. OF COLUMBIA", "DIST_OF_COLUMBIA");
+        formatted = formatted.replace("MIDWAY ATOLL", "MIDWAY_ATOLL");
+        formatted = formatted.replace("N MARIANA ISLANDS", "N_MARIANA_ISLANDS");
+        formatted = formatted.replace("NEW HAMPSHIRE", "NEW_HAMPSHIRE");
+        formatted = formatted.replace("NEW JERSEY", "NEW_JERSEY");
+        formatted = formatted.replace("NEW MEXICO", "NEW_MEXICO");
+        formatted = formatted.replace("NEW YORK", "NEW_YORK");
+        formatted = formatted.replace("NORTH CAROLINA", "NORTH_CAROLINA");
+        formatted = formatted.replace("NORTH DAKOTA", "NORTH_DAKOTA");
+        formatted = formatted.replace("OFFSHORE ATLANTIC", "OFFSHORE_ATLANTIC");
+        formatted = formatted.replace("OFFSHORE GULF", "OFFSHORE_GULF");
+        formatted = formatted.replace("OFFSHORE PACIFIC", "OFFSHORE_PACIFIC");
+        formatted = formatted.replace("PUERTO RICO", "PUERTO_RICO");
+        formatted = formatted.replace("RHODE ISLAND", "RHODE_ISLAND");
+        formatted = formatted.replace("SOUTH CAROLINA", "SOUTH_CAROLINA");
+        formatted = formatted.replace("SOUTH DAKOTA", "SOUTH_DAKOTA");
+        formatted = formatted.replace("VIRGIN ISLANDS", "VIRGIN_ISLANDS");
+        formatted = formatted.replace("WEST VIRGINIA", "WEST_VIRGINIA");
+        formatted = formatted.replace("RUSSIAN FEDERATION", "RUSSIAN_FEDERATION");
+        formatted = formatted.replace("NORTHERN MARIANA ISLANDS", "NORTHERN_MARIANA_ISLANDS");
+        formatted = formatted.replace("MARSHALL ISLANDS", "MARSHALL_ISLANDS");
+        formatted = formatted.replace("BRITISH WEST INDIES", "BRITISH_WEST_INDIES");
+        formatted = formatted.replace("MICRONESIA, FED STATES OF", "MICRONESIA_FED_STATES_OF");
+        formatted = formatted.replace("DOMINICAN REPUBLIC", "DOMINICAN_REPUBLIC");
+        formatted = formatted.replace("AMERICAN SAMOA", "AMERICAN_SAMOA");
+        return formatted;
+    }
+
+    public String remove_duplicate(String s) {
+        char a[] = s.toCharArray();
+        char b[] = new char[a.length];
+        if(a.length == sum(a)) {
+            return String.valueOf(a[0]);
+        }else{
+            int i = 1, j = 0, k = 1;
+            while(i<a.length) {
+                if(a[i] != a[i-1]) {
+                    b[j++] = a[i-1];
+                }
+                i++;
+            }
+            i--;
+            if(a[i] != b[j-1]) {
+                b[j]=a[i];
+            }
+            return String.valueOf(b);
+        }
+    }
+
+    int sum(char a[]) {
+        char b = a[0];
+        int i = 1, count = 0;
+        while(i<a.length) {
+            if(b==a[i]) {
+                count++;
+            }
+            i++;
+        }
+        return count+1;
     }
 
 }
