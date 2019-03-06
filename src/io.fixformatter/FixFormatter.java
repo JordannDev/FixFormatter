@@ -14,7 +14,7 @@ import java.util.Arrays;
  * @version 1.0
  * @since 1/31/2019
  *
- * This Java application will format the FIX.txt file release by the FAA into a
+ * This Java application will format the FIX.txt file released by the FAA into a
  * format usable in the .sct2 format.
  *
  * You can find the fix file here: https://www.faa.gov/air_traffic/flight_info/aeronav/Aero_Data/NASR_Subscription/
@@ -83,7 +83,6 @@ public class FixFormatter {
                     // Parsing to remove the empty spacing to make putting it into an array easier.
                     line = remove_duplicate(line);
                     line = reFormatStates(line);
-                    System.out.println(line);
                     String s = line.replaceAll(" ", ";");
 
                     // Turning S into an array to make accessing the data easier.
